@@ -43,16 +43,7 @@
         )
       };
 
-      const Forms = () => {
-        const [counter, setCounter] = React.useState(1);
-
-        console.log('카운터', counter)
-
-        function handleFormSubmit(event) {
-          event.preventDefault();
-          console.log('전송');
-          setCounter(counter+1)
-        }
+      const Forms = ({handleFormSubmit}) => {
         return( 
           <form onSubmit={handleFormSubmit}>
             <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
@@ -113,12 +104,30 @@
       // );
       // 컴포넌트로 바꾸기
       const App = () =>{
+        const [counter, setCounter] = React.useState(100);
+        // cat1 이미지를 기본으로 지정
+        const CAT1 = "https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react";
+        const CAT2 = "https://cataas.com/cat/BxqL2EjFmtxDkAm2/says/inflearn";
+        const CAT3 = "https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript";
+
+        const [mainCat, setMainCat] = React.useState(CAT1)
+        console.log('카운터', counter)
+
+        function handleFormSubmit(event) {
+          event.preventDefault();
+          console.log('전송');
+          setCounter(counter+1);
+          setMainCat(CAT2);
+
+        }
+
         return (
+          // props에 함수 넘기기
+          // static에서 동적인 상태로 만들어줌
           <div>
-            <Form/>
-            <Title>고양이</Title>
-            <Forms/>
-            <MainCard img="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react"></MainCard>
+            <Forms handleFormSubmit={handleFormSubmit}/>
+            <Title>{counter}번째 고양이</Title>
+            <MainCard img={mainCat}></MainCard>
             <Favorites/>
           </div>
         );
@@ -128,7 +137,7 @@
       const 여기다가그려 = document.querySelector('#app')
 
       // ReactDOM.render(app, 여기다가그려);
-      ReactDOM.createRoot(여기다가그려).render(app);
+      ReactDOM.createRoot(여기다가그려).render(<App/>);
     </script>
   </body>
 </html>
